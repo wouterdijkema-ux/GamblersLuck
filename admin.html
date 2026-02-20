@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Gamblers Luck — Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=Cinzel:wght@600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="firebase-config.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body class="bg bg--admin">
+  <header class="hero">
+    <h1 class="title">Gamblers Luck — Admin</h1>
+    <p class="subtitle">Beheer namen &amp; draai het rad</p>
+  </header>
+
+  <main class="container">
+    <!-- Admin login -->
+    <section id="loginPanel" class="panel">
+      <h2>Admin inloggen</h2>
+      <p class="help">Gebruik het admin-wachtwoord dat je hebt ingesteld in <code>firebase-config.js</code> (<em>of</em> maak een Firebase gebruiker aan als je USE_FIREBASE=true gebruikt).</p>
+      <div class="inline">
+        <input id="adminPassword" class="input" type="password" placeholder="Wachtwoord"/>
+        <button id="loginBtn" class="btn btn--accent">Inloggen</button>
+      </div>
+      <p id="loginMsg" class="error"></p>
+    </section>
+
+    <section id="adminPanel" class="panel hidden">
+      <h2>Teamleden (max. 100)</h2>
+      <p class="help">Voer één naam per regel in. Duplicaten worden automatisch verwijderd.</p>
+      <textarea id="namesInput" class="textarea" rows="10" placeholder="Naam 1&#10;Naam 2&#10;..."></textarea>
+      <div class="inline mt">
+        <button id="saveNamesBtn" class="btn">Opslaan</button>
+        <button id="clearNamesBtn" class="btn btn--ghost">Lijst leegmaken</button>
+        <span id="namesCount" class="muted">0/100</span>
+      </div>
+
+      <h2 class="mt2">Rad</h2>
+      <div class="wheel-wrap">
+        <canvas id="wheelCanvas" width="520" height="520"></canvas>
+        <div class="pointer">▲</div>
+      </div>
+
+      <div class="inline mt">
+        <button id="spinBtn" class="btn btn--accent">Draai voor deze week</button>
+        <span id="weekLabel" class="badge"></span>
+      </div>
+
+      <div id="spinResult" class="result-card mt hidden">
+        <div class="result-row">
+          <span class="label">Week:</span>
+          <span id="resWeek" class="value">—</span>
+        </div>
+        <div class="result-row">
+          <span class="label">Train Conductor:</span>
+          <span id="resConductor" class="value highlight">—</span>
+        </div>
+        <div class="result-row">
+          <span class="label">VIP Passenger:</span>
+          <span id="resVIP" class="value highlight">—</span>
+        </div>
+        <div class="actions">
+          <button id="copyShareLink" class="btn">Kopieer link naar weekuitslag</button>
+        </div>
+      </div>
+
+      <section class="note mt">
+        <p>
+          <strong>Regels:</strong> het systeem laat per ISO-week één trekking toe.  
+          VIP wordt getrokken uit de resterende namen (kan dus niet dezelfde persoon zijn als de Conductor).
+        </p>
+      </section>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>© Gamblers Luck</span>
+  </footer>
+</body>
+</html>
